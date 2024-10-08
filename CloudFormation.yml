@@ -65,22 +65,28 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          # Update packages and install Docker
-          yum update -y
-          amazon-linux-extras install docker -y
-          service docker start
-          usermod -a -G docker ec2-user
-
-          # Install Docker Compose
-          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
-
-          # Pull your application (assuming the Docker Compose file is in S3)
-          aws s3 cp s3://your-bucket/docker-compose.yml /home/ec2-user/docker-compose.yml
-
-          # Run Docker Compose
-          cd /home/ec2-user
-          docker-compose up -d
+           # Update packages and install Docker
+           yum update -y
+           amazon-linux-extras install docker -y
+           service docker start
+           usermod -a -G docker ec2-user
+           
+           # Install Git
+           yum install -y git
+           
+           # Install Docker Compose
+           curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+           chmod +x /usr/local/bin/docker-compose
+           
+           # Clone your GitHub repository
+           cd /home/ec2-user
+           git clone https://github.com/Abdelrhamaan/RightsHero
+           
+           # Move to the project directory
+           cd your-repository
+           
+           # Run Docker Compose to deploy the application
+           docker-compose up -d
 
 Outputs:
   InstancePublicIP:
