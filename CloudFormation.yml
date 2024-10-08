@@ -61,7 +61,7 @@ Resources:
         - !Ref EC2SecurityGroup
       IamInstanceProfile: !Ref EC2InstanceProfile
       ImageId: ami-0fff1b9a61dec8a5f
-      KeyName: CloudFormationKeyPair.pem
+      KeyName: CloudFormationKeyPair
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
