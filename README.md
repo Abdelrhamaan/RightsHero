@@ -72,4 +72,4 @@ A simple project to create Unlimited Subcategories.
 
 ## Usage
 
-1. Go To http://<your ec2 dns or ip>:8000
+1. Go To http://your ec2 dns or ip:8000
