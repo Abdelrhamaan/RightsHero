@@ -1,0 +1,53 @@
+<div class="container mt-5">
+    <h3>Select a Category</h3>
+    <div id="category-container">
+        <label for="category">Category</label>
+        <select id="category" class="form-control" onchange="loadSubcategories(this.value)">
+            <option value="" disabled selected>Select a Category</option>
+            <option value="{{category_a_id}}">Category A</option>
+            <option value="{{category_b_id}}">Category B</option>
+        </select>
+    </div>
+
+    <div id="subcategory-container" class="mt-3">
+        <!-- Subcategories will be dynamically added here -->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function loadSubcategories(parentId) {
+        $.ajax({
+            url: "{% url 'create_subcategories' %}",
+            type: "POST",
+            data: {
+                parent_id: parentId,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+                // Create new subcategory dropdown with the new subcategories as options
+                let newDropdown = `
+                    <div class="form-group">
+                        <label>Subcategories</label>
+                        <select class="form-control" onchange="loadSubcategories(this.value)">
+                            <option value="" disabled selected>Select a Subcategory</option>`;
+
+                // Loop through subcategories and add them as options to the dropdown
+                response.subcategories.forEach(function (subcategory) {
+                    newDropdown += `<option value="${subcategory.id}">${subcategory.name}</option>`;
+                });
+
+                newDropdown += `
+                        </select>
+                    </div>
+                `;
+
+                // Append the new dropdown to the subcategory container
+                $('#subcategory-container').append(newDropdown);
+            },
+            error: function () {
+                alert('Failed to load subcategories');
+            }
+        });
+    }
+</script>
