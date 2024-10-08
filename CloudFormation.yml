@@ -30,6 +30,10 @@ Resources:
           FromPort: 443
           ToPort: 443
           CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8000
+          ToPort: 8000
+          CidrIp: 0.0.0.0/0
 
   # IAM Role for EC2 with AdministratorAccess
   EC2InstanceRole:
@@ -66,24 +70,24 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
            # Update packages and install Docker
-           yum update -y
-           amazon-linux-extras install docker -y
-           service docker start
-           usermod -a -G docker ec2-user
+           sudo yum update -y
+           sudo yum install -y docker
+           sudo service docker start
+           sudo usermod -a -G docker ec2-user
            
            # Install Git
-           yum install -y git
+           sudo yum install -y git
            
            # Install Docker Compose
-           curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-           chmod +x /usr/local/bin/docker-compose
-           
+           sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose           
+           sudo chmod +x /usr/local/bin/docker-compose
+
            # Clone your GitHub repository
            cd /home/ec2-user
            git clone https://github.com/Abdelrhamaan/RightsHero
            
            # Move to the project directory
-           cd your-repository
+           cd RightsHero
            
            # Run Docker Compose to deploy the application
            docker-compose up -d

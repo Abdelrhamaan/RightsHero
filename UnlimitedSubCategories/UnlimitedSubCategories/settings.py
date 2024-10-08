@@ -127,3 +127,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+ALLOWED_HOSTS = [
+    'ec2-3-92-3-105.compute-1.amazonaws.com',
+    'localhost',  # Allow local development
+    '127.0.0.1',  # Allow local development
+]
