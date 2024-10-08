@@ -43,7 +43,7 @@ A simple project to create Unlimited Subcategories.
         git clone https://github.com/Abdelrhamaan/RightsHero
    ```
 
-2. Open your AWS account, go to ec2 instances then create keypair from the left side pair
+2. Open your AWS account, go to ec2 instances then create keypair from the left side pair then download it and put it in project folder
 
 3. Change the (KeyName: CloudFormationKeyPair) in the cloud formation template to your key name
 
